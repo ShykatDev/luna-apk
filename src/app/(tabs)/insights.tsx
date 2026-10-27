@@ -110,7 +110,7 @@ function Tile({ label, value, unit, sub }: { label: string; value: string; unit:
     <Glass style={[styles.card, { flex: 1, gap: 2 }]}>
       <T v="footnote" color={c.textSecondary} style={{ fontWeight: '600' }}>{label.toUpperCase()}</T>
       <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 4 }}>
-        <T style={{ fontSize: 40, fontWeight: '700', letterSpacing: -1, fontVariant: ['tabular-nums'] }}>{value}</T>
+        <T style={{ fontSize: 40, lineHeight: 50, fontWeight: '700', letterSpacing: -1, fontVariant: ['tabular-nums'] }}>{value}</T>
         <T v="subhead" color={c.textSecondary}>{unit}</T>
       </View>
       <T v="footnote" color={c.textSecondary}>{sub}</T>

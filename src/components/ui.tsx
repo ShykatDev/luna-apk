@@ -34,7 +34,9 @@ export function T({ v = 'body', color, style, ...rest }: TextProps & { v?: Varia
   const flat = StyleSheet.flatten(style) ?? {};
   const { fontWeight, ...restStyle } = flat;
   const family = fontWeight ? WEIGHT_TO_FAMILY[String(fontWeight)] : undefined;
-  return <Text {...rest} style={[type[v], { color: color ?? c.text }, restStyle, family ? { fontFamily: family } : null]} />;
+  // Poppins has tall ascenders: if a size is overridden without a line height, give it room so it never clips
+  const lh = restStyle.fontSize && !restStyle.lineHeight ? { lineHeight: Math.ceil(restStyle.fontSize * 1.28) } : null;
+  return <Text {...rest} style={[type[v], { color: color ?? c.text }, restStyle, lh, family ? { fontFamily: family } : null]} />;
 }
 
 /** Spring-scale press feedback used across tappable surfaces. */
@@ -44,14 +46,22 @@ export function PressScale({
   style,
   haptic = 'tap',
   disabled,
+  fill,
   ...rest
-}: PressableProps & { children: ReactNode; style?: StyleProp<ViewStyle>; haptic?: keyof typeof haptics | null }) {
+}: PressableProps & {
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
+  haptic?: keyof typeof haptics | null;
+  /** Stretch to share a row equally with siblings (flex: 1 on both the touch target and its content). */
+  fill?: boolean;
+}) {
   const s = useSharedValue(1);
   const a = useAnimatedStyle(() => ({ transform: [{ scale: s.value }] }));
   return (
     <Pressable
       {...rest}
       disabled={disabled}
+      style={fill ? { flex: 1 } : undefined}
       onPressIn={() => (s.value = withSpring(0.95, { damping: 20, stiffness: 420 }))}
       onPressOut={() => (s.value = withSpring(1, { damping: 14, stiffness: 300 }))}
       onPress={(e) => {
@@ -59,7 +69,7 @@ export function PressScale({
         onPress?.(e);
       }}
     >
-      <Animated.View style={[a, style, disabled && { opacity: 0.4 }]}>{children}</Animated.View>
+      <Animated.View style={[fill && { flex: 1 }, a, style, disabled && { opacity: 0.4 }]}>{children}</Animated.View>
     </Pressable>
   );
 }
