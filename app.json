@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "Luna",
+    "slug": "luna-cycle",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "design.co.luna",
+      "icon": {
+        "light": "./assets/icon.png",
+        "dark": "./assets/icon-dark.png",
+        "tinted": "./assets/icon-tinted.png"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#4A2D52",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "design.co.luna",
+      "allowBackup": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-sqlite",
+        {
+          "useSQLCipher": true
+        }
+      ],
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Luna uses Face ID to keep your health data private."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#C2318E",
+          "enableRemoteNotifications": false
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#FBF6F9",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#0A070C"
+          }
+        }
+      ]
+    ],
+    "scheme": "luna",
+    "backgroundColor": "#FBF6F9",
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
